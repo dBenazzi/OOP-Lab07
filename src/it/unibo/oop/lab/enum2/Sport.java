@@ -3,6 +3,8 @@
  */
 package it.unibo.oop.lab.enum2;
 
+import java.util.Map;
+
 /**
  * Represents an enumeration for declaring sports.
  * 
@@ -18,7 +20,6 @@ package it.unibo.oop.lab.enum2;
 public enum Sport {
 
     /*
-     * TODO
      * 
      * Declare the following sports:
      * 
@@ -37,17 +38,24 @@ public enum Sport {
      * - soccer
      * 
      */
-
+	BASKET(Place.INDOOR, 5, "Basket"), 
+	VOLLEY(Place.INDOOR, 6, "Volley"), 
+	TENNIS(Place.OUTDOOR, 1, "Tennis"),
+	BIKE(Place.OUTDOOR, 1, "Bike"), 
+	F1(Place.OUTDOOR, 1, "F1"), 
+	MOTOGP(Place.OUTDOOR, 1, "MotoGP"), 
+	SOCCER(Place.OUTDOOR, 11, "Soccer");
     /*
-     * TODO
      * 
      * [FIELDS]
      * 
      * Declare required fields
      */
-
-    /*
-     * TODO
+	private final int membersNum;
+	private final Place place;
+	private final String sport;
+    
+	/*
      * 
      * [CONSTRUCTOR]
      * 
@@ -55,10 +63,24 @@ public enum Sport {
      * 
      * - Sport(final Place place, final int noTeamMembers, final String actualName)
      */
+	/**
+	 * 
+	 * Builds a new {@link Sport}.
+	 * 
+	 * @param place
+	 * 			records if the sport is indoor or outdoor
+	 * @param noTeamMembers
+	 * 			number of team members (1 if solo sport)			
+	 * @param actualName
+	 * 			name of the sport
+	 */
+	Sport(final Place place, final int noTeamMembers, final String actualName){
+		this.place = place;
+		this.membersNum = noTeamMembers;
+		this.sport = actualName;
+	}
 
-    /*
-     * TODO
-     * 
+    /* 
      * [METHODS] To be defined
      * 
      * 
@@ -81,4 +103,37 @@ public enum Sport {
      * 
      * Returns the string representation of a sport
      */
+	/**
+	 * checks whether the sport is individual or not
+	 * 
+	 * @return true if the sport is individual
+	 */
+	public boolean isIndividualSport() {
+		return this.membersNum == 1;
+	}
+	
+	/**
+	 * checks whether the sport is indoor or not
+	 * 
+	 * @return
+	 */
+	public boolean isIndoorSport() {
+		return this.place == Place.INDOOR;
+	}
+	
+	/**
+	 * @return whether the sport is indoor or outdoor
+	 */
+	public Place getPlace() {
+		return this.place;
+	}
+	
+	/**
+	 * briefly describes the sport
+	 */
+	public String toString() {
+		return this.sport + " is practiced " + this.place + " and " 
+				+ (this.membersNum == 1 ? "is" : "is not")
+				+ " individual";
+	}
 }

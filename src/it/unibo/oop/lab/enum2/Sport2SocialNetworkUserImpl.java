@@ -3,6 +3,9 @@
  */
 package it.unibo.oop.lab.enum2;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import it.unibo.oop.lab.socialnetwork.SocialNetworkUserImpl;
 import it.unibo.oop.lab.socialnetwork.User;
 
@@ -26,10 +29,9 @@ import it.unibo.oop.lab.socialnetwork.User;
 public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUserImpl<U> {
 
     /*
-     * TODO
-     * 
      * add a field to keep track of the set of sports followed/done by a user
      */
+	private final Set<Sport> sports;
 
     /**
      * Builds a new {@link Sport2SocialNetworkUserImpl}.
@@ -61,6 +63,7 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      */
     public Sport2SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
+        this.sports = new TreeSet<>();
     }
 
     /*
@@ -75,7 +78,7 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      *            a sport followed/done by the user
      */
     public void addSport(final Sport sport) {
-
+    	this.sports.add(sport);
     }
 
     /**
@@ -87,7 +90,7 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      * @return true if user likes sport s
      */
     public boolean likesSport(final Sport s) {
-        return false;
+        return this.sports.contains(s);
     }
 
     /*
@@ -100,6 +103,15 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      * 
      * @return the set of individual sport this user practices/follows
      */
+    public Set<Sport> getIndividualSports() { 
+    	final Set<Sport> tempSports = new TreeSet<>();
+    	for(Sport elem : this.sports) {
+    		if(elem.isIndividualSport()) {
+    			tempSports.add(elem);
+    		}
+    	}
+    	return tempSports; 
+    }
     /*
      * public Set<Sport> getIndividualSports() { return null; }
      * 
@@ -111,7 +123,23 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      * 
      * @return the set of sport practiced in a given place
      */
-    /*
-     * public Set<Sport> getSportPracticedInPlace(Place p) { return null; }
+    /**
+     * 
+     * returns the sports, followed or liked by the user, 
+     * practiced in the specified place
+     * 
+     * @param p
+     * 			outdoor or indoor
+     * @return	the set of sports practiced in place
      */
+    public Set<Sport> getSportPracticedInPlace(Place p) { 
+    	final Set<Sport> tempSports = new TreeSet<>();
+    	for(Sport elem : this.sports) {
+    		if(elem.getPlace() == p) {
+    			tempSports.add(elem);
+    		}
+    	}
+    	return tempSports; 
+    }
+    
 }
